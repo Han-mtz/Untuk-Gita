@@ -252,12 +252,177 @@ blockquote { font-size: 1.25rem; font-style: italic; color: #ff477e; line-height
 
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* RESPONSIVE LAYOUT HP */
-@media (max-width: 768px) {
+/* ================================================
+   RESPONSIVE SYSTEM - Menyesuaikan semua perangkat
+   ================================================
+   - HP kecil  : < 480px  (iPhone SE, Android kecil)
+   - HP normal : 480–767px (kebanyakan smartphone)
+   - Tablet    : 768–1023px (iPad, tablet Android)
+   - Laptop+   : >= 1024px (default / desktop)
+   ================================================ */
+
+/* --- TABLET (768px - 1023px) --- */
+@media (min-width: 768px) and (max-width: 1023px) {
     .main-title { font-size: 2.2rem; }
-    .stats-container { grid-template-columns: repeat(2, 1fr); }
-    .grid-galeri { grid-template-columns: 1fr; }
-    .overflow-locked { height: auto; overflow: auto; } /* Kembalikan scroll standar di HP demi kenyamanan */
+    .sub-title { font-size: 1.9rem; }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .grid-galeri {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+
+    .gallery-card img { height: 230px; }
+
+    .surat-section, .galeri-section, .alasan-section {
+        padding: 70px 30px;
+    }
+
+    .quote-container { padding: 35px 30px; }
+    blockquote { font-size: 1.1rem; }
+
+    .login-box { max-width: 420px; padding: 40px 30px; }
+}
+
+/* --- HP NORMAL (480px - 767px) --- */
+@media (max-width: 767px) {
+    /* Kembalikan scroll standar di semua HP */
+    .overflow-locked {
+        height: auto;
+        overflow: auto;
+    }
+
+    /* --- BERANDA --- */
+    .main-title {
+        font-size: 1.75rem;
+        line-height: 1.35;
+        margin-bottom: 16px;
+    }
+
+    .sub-title {
+        font-size: 1.6rem;
+        margin-bottom: 10px;
+    }
+
+    .intro-text {
+        font-size: 0.9rem;
+        margin-bottom: 22px;
+    }
+
+    .main-content { padding: 16px; }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .stat-box { padding: 14px 8px; }
+    .stat-box h3 { font-size: 1.3rem; }
+    .stat-box p { font-size: 0.72rem; }
+
+    /* --- LOGIN BOX --- */
+    .login-box {
+        padding: 30px 22px;
+        width: 90%;
+        border-radius: 20px;
+    }
+
+    .login-box h2 { font-size: 2rem; }
+    .login-heart { font-size: 2.8rem; }
+
+    /* --- HALAMAN SURAT --- */
+    .surat-section, .galeri-section, .alasan-section {
+        padding: 55px 16px;
+        min-height: unset;
+    }
+
+    .section-header h2 { font-size: 1.6rem; }
+    .section-header { margin-bottom: 25px; }
+
+    .letter-box {
+        padding: 22px 18px;
+        font-size: 0.9rem;
+        line-height: 1.8;
+    }
+
+    .letter-box h3 { font-size: 1.6rem; }
+    .btn-envelope { padding: 12px 26px; font-size: 0.95rem; }
+
+    /* --- GALERI --- */
+    .grid-galeri {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        max-width: 100%;
+    }
+
+    .gallery-card img { height: 240px; }
+
+    /* --- QUOTE / ALASAN --- */
+    .quote-container {
+        padding: 25px 18px;
+        min-height: 190px;
+        width: 100%;
+    }
+
+    blockquote { font-size: 1rem; }
+
+    /* --- TOMBOL --- */
+    .btn-main {
+        padding: 11px 26px;
+        font-size: 0.9rem;
+    }
+
+    /* --- MUSIC PLAYER --- */
+    .disc { width: 48px; height: 48px; font-size: 1.3rem; }
+    .music-player { bottom: 16px; right: 16px; }
+}
+
+/* --- HP KECIL (< 480px) --- */
+@media (max-width: 479px) {
+    .main-title {
+        font-size: 1.45rem;
+        line-height: 1.35;
+    }
+
+    .sub-title { font-size: 1.4rem; }
+
+    .intro-text { font-size: 0.83rem; }
+
+    .stat-box h3 { font-size: 1.15rem; }
+    .stat-box p { font-size: 0.68rem; }
+
+    .section-header h2 { font-size: 1.4rem; }
+
+    .login-box {
+        width: 92%;
+        padding: 26px 18px;
+    }
+
+    .login-box h2 { font-size: 1.75rem; }
+    .login-box p { font-size: 0.85rem; }
+
+    .letter-box {
+        padding: 18px 14px;
+        font-size: 0.85rem;
+    }
+
+    .letter-box h3 { font-size: 1.4rem; }
+
+    .gallery-card img { height: 200px; }
+
+    blockquote { font-size: 0.92rem; }
+
+    .btn-main {
+        padding: 10px 22px;
+        font-size: 0.85rem;
+    }
+
+    .disc { width: 44px; height: 44px; font-size: 1.2rem; }
 }
 /* --- CLASS EFEK TRANSISI FADE (UNTUK TEKS ALASAN) --- */
 #quoteText {
