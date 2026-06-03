@@ -56,64 +56,75 @@
             <div class="disc" id="discIcon">🎵</div>
         </div>
 
-    </div> <audio id="bgMusic" loop>
+    </div> 
+    
+    <audio id="bgMusic" loop>
         <source src="lagu-romantis.mp3" type="audio/mpeg">
     </audio>
 
     <script>
-      const music = document.getElementById('bgMusic');
-const disc = document.getElementById('discIcon');
+        const music = document.getElementById('bgMusic');
+        const disc = document.getElementById('discIcon');
 
-window.onload = function() {
-    const mainWrapper = document.getElementById('main-wrapper');
-    mainWrapper.classList.add('fade-page-in-end');
+        window.onload = function() {
+            const mainWrapper = document.getElementById('main-wrapper');
+            mainWrapper.classList.add('fade-page-in-end');
 
-    // Ambil detik terakhir jika ada, jika tidak ada mulai dari 0
-    const savedTime = localStorage.getItem('musicCurrentTime');
-    if (savedTime) {
-        music.currentTime = parseFloat(savedTime);
-    }
+            // 1. Logika pengecekan tab/sesi baru (jika website sempat ditutup)
+            if (!sessionStorage.getItem('sessionActive')) {
+                // Set ulang detik lagu ke awal
+                localStorage.setItem('musicCurrentTime', '0');
+                localStorage.setItem('musicPlaying', 'false');
+                // Beri tanda bahwa website sedang aktif dibuka sekarang
+                sessionStorage.setItem('sessionActive', 'true');
+            }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    // Cek apakah dipicu dari login atau memang status terakhirnya 'playing'
-    if (urlParams.get('play') === 'true' || localStorage.getItem('musicPlaying') === 'true') {
-        setTimeout(() => {
-            music.play().then(() => {
+            // 2. Ambil detik terakhir jika ada, jika tidak ada mulai dari 0
+            const savedTime = localStorage.getItem('musicCurrentTime');
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            const urlParams = new URLSearchParams(window.location.search);
+            // Cek apakah dipicu dari login atau memang status terakhirnya 'playing'
+            if (urlParams.get('play') === 'true' || localStorage.getItem('musicPlaying') === 'true') {
+                setTimeout(() => {
+                    music.play().then(() => {
+                        disc.classList.add('playing');
+                        localStorage.setItem('musicPlaying', 'true');
+                    }).catch(err => console.log("Blokir browser aktif"));
+                }, 300);
+            }
+
+            // Terus simpan detik lagu berjalan setiap detik secara realtime
+            music.ontimeupdate = function() {
+                localStorage.setItem('musicCurrentTime', music.currentTime);
+            };
+        };
+
+        function keHalamanSurat() {
+            // Simpan detik terakhir dengan pasti sebelum pindah halaman
+            localStorage.setItem('musicCurrentTime', music.currentTime);
+            
+            const mainWrapper = document.getElementById('main-wrapper');
+            mainWrapper.classList.remove('fade-page-in-end');
+            
+            setTimeout(() => {
+                window.location.href = "surat.html";
+            }, 500);
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
                 disc.classList.add('playing');
                 localStorage.setItem('musicPlaying', 'true');
-            }).catch(err => console.log("Blokir browser aktif"));
-        }, 300);
-    }
-
-    // Terus simpan detik lagu berjalan setiap detik secara realtime
-    music.ontimeupdate = function() {
-        localStorage.setItem('musicCurrentTime', music.currentTime);
-    };
-};
-
-function keHalamanSurat() {
-    // Simpan detik terakhir dengan pasti sebelum pindah halaman
-    localStorage.setItem('musicCurrentTime', music.currentTime);
-    
-    const mainWrapper = document.getElementById('main-wrapper');
-    mainWrapper.classList.remove('fade-page-in-end');
-    
-    setTimeout(() => {
-        window.location.href = "surat.html";
-    }, 500);
-}
-
-function toggleMusic() {
-    if (music.paused) {
-        music.play();
-        disc.classList.add('playing');
-        localStorage.setItem('musicPlaying', 'true');
-    } else {
-        music.pause();
-        disc.classList.remove('playing');
-        localStorage.setItem('musicPlaying', 'false');
-    }
-}
+            } else {
+                music.pause();
+                disc.classList.remove('playing');
+                localStorage.setItem('musicPlaying', 'false');
+            }
+        }
     </script>
 </body>
 </html>
