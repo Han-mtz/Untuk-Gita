@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lembaran Surat & Memori Gitaa ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="scrollable-body">
+
+    <div class="hearts-container">
+        <span class="falling-heart red">❤️</span>
+        <span class="falling-heart pink">💖</span>
+        <span class="falling-heart red">❤️</span>
+        <span class="falling-heart pink">💕</span>
+        <span class="falling-heart red">❤️</span>
+        <span class="falling-heart pink">💗</span>
+    </div>
+
+    <section class="surat-section">
+        <div class="section-header">
+            <span>PESAN RAHASIA</span>
+            <h2>Surat Cinta Untuk Gitaa</h2>
+        </div>
+        
+        <div class="envelope-wrapper">
+            <button class="btn-envelope" onclick="bukaSurat()">📂 Buka Surat</button>
+            <div id="letter-content" class="letter-box hidden">
+             <h3>Dear Gitaa...</h3>
+                <p>Hai Gitaa cempedak, sengaja nih aku buatin ini khusus biar kamu bisa baca kapan aja kalau lagi kangen atau lagi capek sama rutinitas hari-hari kamu.</p>
+                <p>Aku cuma mau ngingetin kalau kamu itu berharga banget buat aku. Makasih ya udah selalu jadi pendengar yang baik, selalu lembut kalau ngomong atau nenangin aku, dan selalu kasih perhatian-perhatian kecil yang bikin aku ngerasa beruntung banget bisa milikin kamu.</p>
+                <p>Kamu tuh tipe pacar yang kalau aku lagi pusing, cuma denger suara atau dapet chat dari kamu aja rasanya <em>baterai</em> hidup aku langsung keisi penuh lagi. Maaf ya kalau kadang aku belum bisa jadi pacar yang sempurna atau masih sering bikin kamu repot.</p>
+                <p>Tapi satu hal yang perlu kamu tahu, rasa sayang aku ke kamu tuh beneran tulus dan gak ada habisnya. Aku pengen selalu ada di samping kamu, gak cuma pas kamu lagi ketawa ceria, tapi juga pas kamu lagi ngerasa capek atau butuh sandaran. Kita bagi dua ya capeknya?</p>
+                <p>Makasih udah lahir ke dunia dan jadi bagian paling indah di hidup aku, Gitaa. <em>Stay happy and healthy ya, I’m always here for you, no matter what.</em> ❤️</p>
+                <p>SALAM PENGANGGURAN</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="galeri-section">
+        <div class="section-header">
+            <span>GALERI MEMORI & ESTETIKA</span>
+            <h2>Visualisasi Keindahanmu</h2>
+            <small style="color: #ff7096; font-style: italic;">(Setiap gambar dan bukti dari keindahan kamu✨)</small>
+        </div>
+        <div class="grid-galeri heart-cursor-zone">
+            <div class="gallery-card">
+                <img src="gambar-gita1.jpeg" alt="Foto 1">
+                <p>Senyuman indah</p>
+            </div>
+            <div class="gallery-card">
+                <img src="gambar-gita2.jpeg" alt="Foto 2">
+                <p>kenangan</p>
+            </div>
+            <div class="gallery-card">
+                <img src="gambar-gita3.jpeg" alt="Foto 3">
+                <p>wajah bahagia</p>
+            </div>
+        </div>
+    </section>
+
+<section class="alasan-section">
+        <div class="section-header">
+            <span>ALASAN SAYANG</span>
+            <h2>Mengapa Aku Mencintaimu?</h2>
+        </div>
+        
+        <div class="quote-container">
+            <blockquote id="quoteText" class="fade-in">
+                "Mencintaimu adalah hal paling manis dan membahagiakan yang pernah terjadi dalam hidupku."
+            </blockquote>
+            
+            <div class="action-wrapper">
+                <button class="btn-main" onclick="gantiAlasan()">Alasan Lainnya...</button>
+            </div>
+        </div>
+        
+        <button class="btn-main btn-secondary" onclick="kembaliKeBeranda()">⬅ Kembali ke Beranda</button>
+    </section>
+
+    <div class="music-player" onclick="toggleMusic()">
+        <div class="disc" id="discIcon">🎵</div>
+    </div>
+
+    <audio id="bgMusic" loop>
+        <source src="lagu-romantis.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById('bgMusic');
+        const disc = document.getElementById('discIcon');
+
+        // Daftar 7 pesan alasan mencintaimu
+        const daftarAlasan = [
+            "Mencintaimu adalah hal paling manis dan membahagiakan yang pernah terjadi dalam hidupku.",
+            "Walaupun berak sembarangan tetap sayang :>.",
+            "Cara kamu memperlakukanku dengan penuh kesabaran membuatku selalu merasa menjadi orang yang paling beruntung.",
+            "Bersamamu, aku tidak perlu berpura-pura menjadi orang lain. Kamu menerima segala kekuranganku dengan ketulusanmu.",
+            "Aku mencintai bagaimana caramu tertawa dan bagaimana binar matamu selalu berhasil menenangkan duniaku yang bising.",
+            "Setiap cerita, mimpi, bahkan keheningan saat bersamamu terasa jauh lebih berharga daripada apa pun di dunia ini.",
+            "Karena bagiku, kebahagiaan itu sederhana; melihatmu bahagia dan tahu bahwa akulah alasan di balik senyuman itu."
+        ];
+
+        let indeksSekarang = 0;
+
+        // Fungsi dengan logika transisi berganti teks
+        function gantiAlasan() {
+            const quoteElement = document.getElementById('quoteText');
+            
+            // 1. Hilangkan kelas fade-in untuk memicu efek menghilang (fade-out)
+            quoteElement.classList.remove('fade-in');
+            quoteElement.classList.add('fade-out');
+            
+            // 2. Beri jeda 300ms agar teks menghilang dulu, lalu ganti teksnya
+            setTimeout(() => {
+                indeksSekarang = (indeksSekarang + 1) % daftarAlasan.length;
+                quoteElement.innerText = `"${daftarAlasan[indeksSekarang]}"`;
+                
+                // 3. Kembalikan efek memunculkan teks (fade-in)
+                quoteElement.classList.remove('fade-out');
+                quoteElement.classList.add('fade-in');
+            }, 300);
+        }
+
+        window.onload = function() {
+            if (sessionStorage.getItem('musicPlaying') === 'true') {
+                music.play().then(() => {
+                    disc.classList.add('playing');
+                }).catch(err => console.log(err));
+            }
+        };
+
+        function bukaSurat() {
+            const letter = document.getElementById('letter-content');
+            letter.classList.toggle('hidden');
+        }
+
+        function kembaliKeBeranda() {
+           window.location.href = "beranda.html";
+        }
+
+        function toggleMusic() {
+            if (music.paused) {
+                music.play();
+                disc.classList.add('playing');
+                sessionStorage.setItem('musicPlaying', 'true');
+            } else {
+                music.pause();
+                disc.classList.remove('playing');
+                sessionStorage.removeItem('musicPlaying');
+            }
+        }
+    </script>
+</body>
+</html>
