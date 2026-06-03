@@ -91,7 +91,7 @@
         const music = document.getElementById('bgMusic');
         const disc = document.getElementById('discIcon');
 
-        // Daftar 7 pesan alasan mencintaimu (Tetap mempertahankan humor khas kamu)
+        // Daftar 7 pesan alasan mencintaimu
         const daftarAlasan = [
             "Mencintaimu adalah hal paling manis dan membahagiakan yang pernah terjadi dalam hidupku.",
             "Walaupun berak sembarangan tetap sayang :>.",
@@ -104,7 +104,7 @@
 
         let indeksSekarang = 0;
 
-        // Fungsi dengan logika transisi berganti teks
+        // Fungsi dengan logika transisi berganti teks alasan
         function gantiAlasan() {
             const quoteElement = document.getElementById('quoteText');
             
@@ -121,20 +121,27 @@
         }
 
         window.onload = function() {
-            // 1. Ambil posisi detik terakhir lagu dari halaman beranda
+            // 1. Cek jika user langsung membuka link surat.html di tab baru setelah ditutup
+            if (!sessionStorage.getItem('sessionActive')) {
+                localStorage.setItem('musicCurrentTime', '0');
+                localStorage.setItem('musicPlaying', 'false');
+                sessionStorage.setItem('sessionActive', 'true');
+            }
+
+            // 2. Ambil posisi detik terakhir lagu dari halaman beranda
             const savedTime = localStorage.getItem('musicCurrentTime');
             if (savedTime) {
                 music.currentTime = parseFloat(savedTime);
             }
 
-            // 2. Jika status lagu di halaman sebelumnya menyala, lanjutkan pemutaran
+            // 3. Jika status lagu di halaman sebelumnya menyala, lanjutkan pemutaran
             if (localStorage.getItem('musicPlaying') === 'true') {
                 music.play().then(() => {
                     disc.classList.add('playing');
                 }).catch(err => console.log("Menunggu interaksi user: ", err));
             }
 
-            // 3. Rekam perpindahan detik lagu secara terus-menerus (realtime)
+            // 4. Rekam perpindahan detik lagu secara terus-menerus (realtime)
             music.ontimeupdate = function() {
                 localStorage.setItem('musicCurrentTime', music.currentTime);
             };
