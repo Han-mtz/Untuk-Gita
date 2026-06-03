@@ -23,13 +23,22 @@
         <div class="login-box">
             <div class="login-heart">💖</div>
             <h2>Halo, Gitaa...</h2>
-            <p>Ada sebuah pesan kecil yang dibuat  untukmu hari ini</p>
+            <p>Ada sebuah pesan kecil yang dibuat untukmu hari ini</p>
             <button class="btn-main" onclick="masukKeBeranda()">Dibuka yaa ❤️</button>
         </div>
 
     </div>
 
     <script>
+        // BEGITU HALAMAN DI-LOAD, LANGSUNG RESET MEMORI DETIK LAGU KEMBALI KE 0
+        window.onload = function() {
+            localStorage.setItem('musicCurrentTime', '0');
+            localStorage.setItem('musicPlaying', 'false');
+            
+            // Menghapus flag sessionActive agar halaman beranda/surat juga menganggap ini sesi baru
+            sessionStorage.removeItem('sessionActive');
+        };
+
         function masukKeBeranda() {
             const wrapper = document.getElementById('page-wrapper');
             
