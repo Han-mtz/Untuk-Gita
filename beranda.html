@@ -61,46 +61,59 @@
     </audio>
 
     <script>
-        const music = document.getElementById('bgMusic');
-        const disc = document.getElementById('discIcon');
+      const music = document.getElementById('bgMusic');
+const disc = document.getElementById('discIcon');
 
-        window.onload = function() {
-            // Memicu efek fade-in setelah seluruh elemen halaman termuat sempurna
-            const mainWrapper = document.getElementById('main-wrapper');
-            mainWrapper.classList.add('fade-page-in-end');
+window.onload = function() {
+    const mainWrapper = document.getElementById('main-wrapper');
+    mainWrapper.classList.add('fade-page-in-end');
 
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('play') === 'true') {
-                setTimeout(() => {
-                    music.play().then(() => {
-                        disc.classList.add('playing');
-                        sessionStorage.setItem('musicPlaying', 'true');
-                    }).catch(err => console.log("Blokir browser aktif"));
-                }, 300);
-            }
-        };
+    // Ambil detik terakhir jika ada, jika tidak ada mulai dari 0
+    const savedTime = localStorage.getItem('musicCurrentTime');
+    if (savedTime) {
+        music.currentTime = parseFloat(savedTime);
+    }
 
-        function keHalamanSurat() {
-            // Beri efek memudar keluar sebelum pindah ke halaman surat
-            const mainWrapper = document.getElementById('main-wrapper');
-            mainWrapper.classList.remove('fade-page-in-end');
-            
-            setTimeout(() => {
-                window.location.href = "surat.html";
-            }, 500);
-        }
-
-        function toggleMusic() {
-            if (music.paused) {
-                music.play();
+    const urlParams = new URLSearchParams(window.location.search);
+    // Cek apakah dipicu dari login atau memang status terakhirnya 'playing'
+    if (urlParams.get('play') === 'true' || localStorage.getItem('musicPlaying') === 'true') {
+        setTimeout(() => {
+            music.play().then(() => {
                 disc.classList.add('playing');
-                sessionStorage.setItem('musicPlaying', 'true');
-            } else {
-                music.pause();
-                disc.classList.remove('playing');
-                sessionStorage.removeItem('musicPlaying');
-            }
-        }
+                localStorage.setItem('musicPlaying', 'true');
+            }).catch(err => console.log("Blokir browser aktif"));
+        }, 300);
+    }
+
+    // Terus simpan detik lagu berjalan setiap detik secara realtime
+    music.ontimeupdate = function() {
+        localStorage.setItem('musicCurrentTime', music.currentTime);
+    };
+};
+
+function keHalamanSurat() {
+    // Simpan detik terakhir dengan pasti sebelum pindah halaman
+    localStorage.setItem('musicCurrentTime', music.currentTime);
+    
+    const mainWrapper = document.getElementById('main-wrapper');
+    mainWrapper.classList.remove('fade-page-in-end');
+    
+    setTimeout(() => {
+        window.location.href = "surat.html";
+    }, 500);
+}
+
+function toggleMusic() {
+    if (music.paused) {
+        music.play();
+        disc.classList.add('playing');
+        localStorage.setItem('musicPlaying', 'true');
+    } else {
+        music.pause();
+        disc.classList.remove('playing');
+        localStorage.setItem('musicPlaying', 'false');
+    }
+}
     </script>
 </body>
 </html>
