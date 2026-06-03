@@ -27,13 +27,13 @@
         <div class="envelope-wrapper">
             <button class="btn-envelope" onclick="bukaSurat()">📂 Buka Surat</button>
             <div id="letter-content" class="letter-box hidden">
-             <h3>Dear Gitaa...</h3>
+                <h3>Dear Gitaa...</h3>
                 <p>Hai Gitaa cempedak, sengaja nih aku buatin ini khusus biar kamu bisa baca kapan aja kalau lagi kangen atau lagi capek sama rutinitas hari-hari kamu.</p>
                 <p>Aku cuma mau ngingetin kalau kamu itu berharga banget buat aku. Makasih ya udah selalu jadi pendengar yang baik, selalu lembut kalau ngomong atau nenangin aku, dan selalu kasih perhatian-perhatian kecil yang bikin aku ngerasa beruntung banget bisa milikin kamu.</p>
                 <p>Kamu tuh tipe pacar yang kalau aku lagi pusing, cuma denger suara atau dapet chat dari kamu aja rasanya <em>baterai</em> hidup aku langsung keisi penuh lagi. Maaf ya kalau kadang aku belum bisa jadi pacar yang sempurna atau masih sering bikin kamu repot.</p>
                 <p>Tapi satu hal yang perlu kamu tahu, rasa sayang aku ke kamu tuh beneran tulus dan gak ada habisnya. Aku pengen selalu ada di samping kamu, gak cuma pas kamu lagi ketawa ceria, tapi juga pas kamu lagi ngerasa capek atau butuh sandaran. Kita bagi dua ya capeknya?</p>
                 <p>Makasih udah lahir ke dunia dan jadi bagian paling indah di hidup aku, Gitaa. <em>Stay happy and healthy ya, I’m always here for you, no matter what.</em> ❤️</p>
-                <p>SALAM PENGANGGURAN</p>
+                <p style="font-weight: bold; margin-top: 20px; color: #ff477e;">SALAM PENGANGGURAN</p>
             </div>
         </div>
     </section>
@@ -60,7 +60,7 @@
         </div>
     </section>
 
-<section class="alasan-section">
+    <section class="alasan-section">
         <div class="section-header">
             <span>ALASAN SAYANG</span>
             <h2>Mengapa Aku Mencintaimu?</h2>
@@ -91,7 +91,7 @@
         const music = document.getElementById('bgMusic');
         const disc = document.getElementById('discIcon');
 
-        // Daftar 7 pesan alasan mencintaimu
+        // Daftar 7 pesan alasan mencintaimu (Tetap mempertahankan humor khas kamu)
         const daftarAlasan = [
             "Mencintaimu adalah hal paling manis dan membahagiakan yang pernah terjadi dalam hidupku.",
             "Walaupun berak sembarangan tetap sayang :>.",
@@ -108,27 +108,36 @@
         function gantiAlasan() {
             const quoteElement = document.getElementById('quoteText');
             
-            // 1. Hilangkan kelas fade-in untuk memicu efek menghilang (fade-out)
             quoteElement.classList.remove('fade-in');
             quoteElement.classList.add('fade-out');
             
-            // 2. Beri jeda 300ms agar teks menghilang dulu, lalu ganti teksnya
             setTimeout(() => {
                 indeksSekarang = (indeksSekarang + 1) % daftarAlasan.length;
                 quoteElement.innerText = `"${daftarAlasan[indeksSekarang]}"`;
                 
-                // 3. Kembalikan efek memunculkan teks (fade-in)
                 quoteElement.classList.remove('fade-out');
                 quoteElement.classList.add('fade-in');
             }, 300);
         }
 
         window.onload = function() {
-            if (sessionStorage.getItem('musicPlaying') === 'true') {
+            // 1. Ambil posisi detik terakhir lagu dari halaman beranda
+            const savedTime = localStorage.getItem('musicCurrentTime');
+            if (savedTime) {
+                music.currentTime = parseFloat(savedTime);
+            }
+
+            // 2. Jika status lagu di halaman sebelumnya menyala, lanjutkan pemutaran
+            if (localStorage.getItem('musicPlaying') === 'true') {
                 music.play().then(() => {
                     disc.classList.add('playing');
-                }).catch(err => console.log(err));
+                }).catch(err => console.log("Menunggu interaksi user: ", err));
             }
+
+            // 3. Rekam perpindahan detik lagu secara terus-menerus (realtime)
+            music.ontimeupdate = function() {
+                localStorage.setItem('musicCurrentTime', music.currentTime);
+            };
         };
 
         function bukaSurat() {
@@ -137,18 +146,20 @@
         }
 
         function kembaliKeBeranda() {
-           window.location.href = "beranda.html";
+            // Simpan detik terakhir lagu tepat sebelum melompat kembali ke beranda.html
+            localStorage.setItem('musicCurrentTime', music.currentTime);
+            window.location.href = "beranda.html";
         }
 
         function toggleMusic() {
             if (music.paused) {
                 music.play();
                 disc.classList.add('playing');
-                sessionStorage.setItem('musicPlaying', 'true');
+                localStorage.setItem('musicPlaying', 'true');
             } else {
                 music.pause();
                 disc.classList.remove('playing');
-                sessionStorage.removeItem('musicPlaying');
+                localStorage.setItem('musicPlaying', 'false');
             }
         }
     </script>
