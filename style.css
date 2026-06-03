@@ -19,6 +19,12 @@ body {
     overflow: hidden;
 }
 
+/* Khusus login page agar selalu center di semua HP */
+.login-body.overflow-locked {
+    min-height: 100dvh; /* dvh = dynamic viewport height, akurat di Android & iOS */
+    height: 100dvh;
+}
+
 /* Membuka fungsi scroll (Khusus untuk halaman isi konten) */
 .scrollable-body {
     overflow-y: auto;
@@ -290,10 +296,20 @@ blockquote { font-size: 1.25rem; font-style: italic; color: #ff477e; line-height
 
 /* --- HP NORMAL (480px - 767px) --- */
 @media (max-width: 767px) {
-    /* Kembalikan scroll standar di semua HP */
+    /* Kembalikan scroll standar di semua HP — KECUALI login page */
     .overflow-locked {
         height: auto;
         overflow: auto;
+    }
+
+    /* Login page tetap full screen & center di HP */
+    .login-body.overflow-locked {
+        height: 100dvh;
+        min-height: 100dvh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     /* --- BERANDA --- */
