@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Datang, Gitaa ✨</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body class="login-body overflow-locked">
+
+    <div id="page-wrapper" class="fade-page-in">
+
+        <div class="hearts-container">
+            <span class="falling-heart red">❤️</span>
+            <span class="falling-heart pink">💖</span>
+            <span class="falling-heart red">❤️</span>
+            <span class="falling-heart pink">💕</span>
+            <span class="falling-heart red">❤️</span>
+            <span class="falling-heart pink">💗</span>
+        </div>
+
+        <div class="login-box">
+            <div class="login-heart">💖</div>
+            <h2>Halo, Gitaa...</h2>
+            <p>Ada sebuah pesan kecil yang dibuat  untukmu hari ini</p>
+            <button class="btn-main" onclick="masukKeBeranda()">Dibuka yaa ❤️</button>
+        </div>
+
+    </div>
+
+    <script>
+        function masukKeBeranda() {
+            const wrapper = document.getElementById('page-wrapper');
+            
+            // 1. Hapus efek masuk, aktifkan efek memudar keluar (fade-out)
+            wrapper.classList.remove('fade-page-in');
+            wrapper.classList.add('fade-page-out');
+            
+            // 2. Beri jeda 500ms (0.5 detik) sesuai durasi animasi CSS baru kemudian pindah halaman
+            setTimeout(() => {
+               window.location.href = "beranda.html?play=true";
+            }, 500);
+        }
+    </script>
+</body>
+</html>
